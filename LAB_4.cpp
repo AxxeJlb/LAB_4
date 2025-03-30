@@ -28,10 +28,10 @@ const unsigned int SCR_WIDTH = 1024;
 const unsigned int SCR_HEIGHT = 768;
 float lastX = SCR_WIDTH / 2;
 float lastY = SCR_HEIGHT / 2;
-bool firstMouse = true; // Указываем, что это первичный вызов
+bool firstMouse = true;
 
-float yaw = -90.0f; // Угол по оси Y
-float pitch = 0.0f; // Угол по оси X
+float yaw = -90.0f;
+float pitch = 0.0f;
 
 glm::mat4 projection = glm::perspective(
     glm::radians(45.0f),
@@ -51,7 +51,7 @@ void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
     float xpos = static_cast<float>(xposIn);
     float ypos = static_cast<float>(yposIn);
 
-    if (firstMouse) // initially set to true 
+    if (firstMouse)
     {
         lastX = xpos;
         lastY = ypos;
@@ -78,7 +78,7 @@ void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
     front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
     front.y = sin(glm::radians(pitch));
     front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-    CameraFront = glm::normalize(front); // изменяем вектор направления камеры
+    CameraFront = glm::normalize(front);
 }
 
 int main()
@@ -95,8 +95,8 @@ int main()
     }
 
     glfwMakeContextCurrent(window);
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); // Делаем указатель мыши невидимым
-    glfwSetCursorPosCallback(window, mouse_callback); // Устанавливаем колбек для мыши
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetCursorPosCallback(window, mouse_callback);
 
     glewExperimental = GL_TRUE;
     if (glewInit() != GLEW_OK) {
@@ -130,7 +130,6 @@ int main()
         myShader.use();
         myShader.setFloat("timeValue", timeValue);
 
-        // Обновляем матрицу вида каждый кадр
         view = glm::lookAt(CameraPos, CameraPos + CameraFront, CameraUp);
         settingMat4(myShader.ID, "projection", projection);
         settingMat4(myShader.ID, "view", view);
